@@ -40,6 +40,7 @@ struct ContentView: View {
                             .onDelete(perform: deleteTasks)
                         }
             }
+                .listStyle(GroupedListStyle())
                 .navigationTitle("To-Do!")
 
                 .navigationBarItems(leading: EditButton(), trailing: HStack(spacing: 20) {
