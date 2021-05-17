@@ -11,6 +11,7 @@ struct AddNewCategoryView: View {
     @State private var categoryName = ""
     @StateObject var vm : viewModel
     @Environment(\.managedObjectContext) var moc
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -21,6 +22,7 @@ struct AddNewCategoryView: View {
                 }
                 Button(action: {
                     vm.addCategory(moc: self.moc, categoryTitle: categoryName)
+                    self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Save Category!")
                     
