@@ -13,13 +13,12 @@ struct AddTaskView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
     var categories : FetchedResults<Category>
-    @State private var taskTitle = ""
-    @State private var taskPriority = "Low"
+    @State private var taskTitle : String = ""
+    @State private var taskPriority : String = "Low"
     
     @State private var chosenCategory : String? = ""
     
-    
-    @State private var taskDate = Date()
+    @State private var taskDate : Date = Date()
     
 
     let priorities = ["Low", "High"]
@@ -65,25 +64,14 @@ struct AddTaskView: View {
                 Section {
                     Button("Save") {
                         self.vm.addTask(moc: self.moc, title: self.taskTitle, date: self.taskDate, priority: self.taskPriority, chosenCategory: chosenCategory!)
-                        //                        let newTask = ToDoItem(context: self.moc)
-                        //                        newTask.title = self.taskTitle
-                        //                        newTask.desc = self.taskDescription
-                        //                        if(self.trackDate) {
-                        //                            newTask.date = self.taskDate
-                        //                        }
-                        //                        newTask.priority = self.taskPriority
-                        //                        newTask.isCompleted = false
-                        //                        try? self.moc.save()
                         self.presentationMode.wrappedValue.dismiss()
                     }
+                    .disabled(self.taskTitle.isEmpty)
                     
                 }
             }
             .navigationTitle("Add Task")
-            
         }
-        
-        
     }
 }
 

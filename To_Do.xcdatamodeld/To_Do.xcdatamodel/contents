@@ -11,12 +11,13 @@
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="priority" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Category" positionX="-63" positionY="27" width="128" height="59"/>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="ToDoItem" positionX="-63" positionY="-9" width="128" height="104"/>
+        <element name="ToDoItem" positionX="-63" positionY="-9" width="128" height="119"/>
     </elements>
 </model>

@@ -9,17 +9,17 @@ import SwiftUI
 
 struct TaskView: View {
     @StateObject var vm : viewModel
+    //CoreDatas managed context
     @Environment(\.managedObjectContext) var moc
+    @State private var showingEditView = false
     var title : String
     var priority : String
     var date : Date
     @State var isCompleted : Bool
     var body: some View {
-    
-        
         HStack {
             Rectangle()
-            
+                //If the task has a high priority, the rectangle should be red, otherwise green
                 .fill(self.priority == "High" ? Color.red : Color.green)
                 .frame(width: 8, height: 40)
             VStack (alignment: .leading){
@@ -39,7 +39,19 @@ struct TaskView: View {
                     self.isCompleted.toggle()
                     self.vm.updateCompletion(moc: self.moc, title: self.title)
                 }
+            
+            Button(action: {
+                self.showingEditView = true
+            }, label: {
+                Image(systemName: "square.and.pencil")
+                    .foregroundColor(.blue)
+            })
+            .alert(isPresented: $showingEditView) {
+                Alert(title: Text("Ouchh!"), message: Text("Sadly, I run out of time when coding the edit feature. So for now, all you get is this shiny popup 😢. Hopefully its implemented soon!"), dismissButton: .default(Text("Ok!")))
+            }
+ 
         }
+
     }
     
     

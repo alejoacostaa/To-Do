@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject var vm = viewModel()
     @State private var showingAddSheet = false
     @State private var addCategory = false
+    //In order to iterate through both the To Do Items as well as the categories, we fetch all entities with CoreData
     @FetchRequest(entity: ToDoItem.entity(), sortDescriptors: []) var toDoItems : FetchedResults<ToDoItem>
     
     @FetchRequest(entity: Category.entity(), sortDescriptors: []) var categories : FetchedResults<Category>
@@ -21,9 +22,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
                 List {
-                    if categories.count < 1 {
-                        Text("Add some items/categories!")
-                    } else {
                         Section(header: Text("Grouped Tasks")) {
                             ForEach(categories, id: \.self) { category in
                                 let filteredTasks = self.vm.getTasksForCategory(moc: self.viewContext, category: category.categoryName!)
@@ -41,10 +39,8 @@ struct ContentView: View {
                             }
                             .onDelete(perform: deleteTasks)
                         }
-                        
-                }
             }
-                .navigationTitle("Categories")
+                .navigationTitle("To-Do!")
 
                 .navigationBarItems(leading: EditButton(), trailing: HStack(spacing: 20) {
                     Button(action: {self.addCategory = true}, label: {
@@ -67,7 +63,7 @@ struct ContentView: View {
     }
     
     
-    
+    //Ideally, this should go in the viewModel so as to respect the MVVM architectural pattern, but im pretty low on time right now so in a future version, Ill move it :)
     func deleteCategories(at offsets: IndexSet) {
         for offset in offsets {
             self.vm.deleteCategories(moc: self.viewContext, category: categories[offset].categoryName!)
@@ -89,14 +85,6 @@ struct ContentView: View {
     
 
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

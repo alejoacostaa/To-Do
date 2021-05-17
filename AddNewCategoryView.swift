@@ -15,27 +15,24 @@ struct AddNewCategoryView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                Text("Title")
-                TextField("Category name", text: $categoryName)
-                Spacer()
-                
-                HStack {
-                    Button(action: {
-                        vm.addCategory(moc: self.moc, categoryTitle: categoryName)
-                    }, label: {
-                        Text("Save Category!")
-                        
-                    })
-                    .disabled(self.categoryName.isEmpty)
+            Form {
+                Section {
+                    TextField("Category name", text: $categoryName)
                 }
-                Spacer()
+                Button(action: {
+                    vm.addCategory(moc: self.moc, categoryTitle: categoryName)
+                }, label: {
+                    Text("Save Category!")
+                    
+                })
+                .disabled(self.categoryName.isEmpty)
             }
             .navigationTitle("Add Category")
-            .padding()
         }
+
     }
 }
+
 
 struct AddNewCategoryView_Previews: PreviewProvider {
     static var previews: some View {
